@@ -1,0 +1,5 @@
+# diretórios
+node_modules/
+
+# arquivos
+*.sql
