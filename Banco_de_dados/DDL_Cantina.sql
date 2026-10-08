@@ -3,12 +3,8 @@ CREATE DATABASE db_Cantina;
 
 USE db_Cantina;
 
-DROP TABLE IF EXISTS tbPedidoBebida;
-DROP TABLE IF EXISTS tbPedidoSalgado;
-DROP TABLE IF EXISTS tbPedidoLanche;
-DROP TABLE IF EXISTS tbLanche;
-DROP TABLE IF EXISTS tbSalgado;
-DROP TABLE IF EXISTS tbBebida;
+DROP TABLE IF EXISTS tbPedidoProduto;
+DROP TABLE IF EXISTS tbProduto;
 DROP TABLE IF EXISTS tbDisponibilidade;
 DROP TABLE IF EXISTS tbCategoria;
 DROP TABLE IF EXISTS tbPedido;
@@ -33,17 +29,18 @@ CREATE TABLE tbCliente (
 #Pedido
 CREATE TABLE tbPedido (
     idPedido INT PRIMARY KEY AUTO_INCREMENT,
-    dataElaboracao DATE,
+    dataElaboracao DATETIME,
     idCliente INT,
     
-    CONSTRAINT idCliente
+    CONSTRAINT fk_pedidoCliente
     FOREIGN KEY (idCliente) REFERENCES tbCliente(idCliente)
 );
 
 #Categoria
 CREATE TABLE tbCategoria (
     idCategoria INT PRIMARY KEY AUTO_INCREMENT,
-    tipoCategoria VARCHAR(20)
+    nomeCategoria VARCHAR(20),
+    descricaoCategoria VARCHAR(100)
 );
 
 #Disponibilidade
@@ -52,92 +49,35 @@ CREATE TABLE tbDisponibilidade (
     nomeDisponibilidade VARCHAR(13)
 );
 
-#Bebida
-CREATE TABLE tbBebida (
-    idBebida INT PRIMARY KEY AUTO_INCREMENT,
-    nomeBebida VARCHAR(30) NOT NULL,
-    precoBebida DECIMAL(5, 2) NOT NULL CHECK (precoBebida > 0), #para não deixar eu salvar a bebida sem preço
+ #Produtos
+ CREATE TABLE tbProduto (
+    idProduto INT PRIMARY KEY AUTO_INCREMENT,
+    nomeProduto VARCHAR(40) NOT NULL,
+    descricaoProduto VARCHAR(120) NOT NULL,
+    precoProduto DECIMAL(5, 2) NOT NULL CHECK (precoProduto > 0),
     idCategoria INT,
     idDisponibilidade INT,
     
-    CONSTRAINT idCategoriaBebida
+    CONSTRAINT fk_produtoCategoria
     FOREIGN KEY (idCategoria) REFERENCES tbCategoria(idCategoria),
     
-    CONSTRAINT idDisponibilidadeBebida
-    FOREIGN KEY (idDisponibilidade) REFERENCES tbDisponibilidade(idDisponibilidade) ON UPDATE CASCADE
-);
- 
- #Salgado
- CREATE TABLE tbSalgado (
-    idSalgado INT PRIMARY KEY AUTO_INCREMENT,
-    nomeSalgado VARCHAR(30) NOT NULL,
-    precoSalgado DECIMAL(5, 2) NOT NULL CHECK (precoBebida > 0),
-    idCategoria INT,
-    idDisponibilidade INT,
-    
-    CONSTRAINT idCategoriaSalgado
-    FOREIGN KEY (idCategoria) REFERENCES tbCategoria(idCategoria),
-    
-    CONSTRAINT idDisponibilidadeSalgado
-    FOREIGN KEY (idDisponibilidade) REFERENCES tbDisponibilidade(idDisponibilidade) ON UPDATE CASCADE
+    CONSTRAINT fk_produtoDispo
+    FOREIGN KEY (idDisponibilidade) REFERENCES tbDisponibilidade(idDisponibilidade)
 );
 
-#Lanche
-CREATE TABLE tbLanche (
-    idLanche INT PRIMARY KEY AUTO_INCREMENT,
-    nomeLanche VARCHAR (40) NOT NULL,
-    precoLanche DECIMAL(5, 2) NOT NULL CHECK (precoBebida > 0),
-    idCategoria INT,
-    idDisponibilidade INT,
-    
-	CONSTRAINT idCategoriaLanche
-    FOREIGN KEY (idCategoria) REFERENCES tbCategoria(idCategoria),
-    
-    CONSTRAINT idDisponibilidadeLanche
-    FOREIGN KEY (idDisponibilidade) REFERENCES tbDisponibilidade(idDisponibilidade) ON UPDATE CASCADE
-);
-
-
-#Tabelas associativas
-
-#Pedido e Lanche
-CREATE TABLE tbPedidoLanche (
+#Tabela assiciativa
+CREATE TABLE tbPedidoProduto (
     idPedido INT,
-    idLanche INT,
-    Quantidade INT NOT NULL CHECK (quantidade > 0),
-    PRIMARY KEY (idLanche, idPedido),
+    idProduto INT,
+    Quantidade INT NOT NULL CHECK (Quantidade > 0),
+    precoUnitario DECIMAL(5, 2) NOT NULL CHECK (precoUnitario > 0),
     
-    CONSTRAINT idPedidoPL
+    CONSTRAINT pk_pedido_produto
+    PRIMARY KEY (idPedido, idProduto),
+    
+    CONSTRAINT fk_pedProd_Pedido
     FOREIGN KEY (idPedido) REFERENCES tbPedido(idPedido) ON DELETE CASCADE,
     
-    CONSTRAINT idLanchePL
-    FOREIGN KEY (idLanche) REFERENCES tbLanche(idLanche) ON DELETE RESTRICT
-);
-
-#Pedido e Salgado
-CREATE TABLE tbPedidoSalgado (
-    idPedido INT,
-    idSalgado INT,
-    Quantidade INT NOT NULL CHECK (quantidade > 0),
-    PRIMARY KEY (idSalgado, idPedido),
-    
-    CONSTRAINT idPedidoPS
-    FOREIGN KEY (idPedido) REFERENCES tbPedido(idPedido) ON DELETE CASCADE,
-    
-    CONSTRAINT idSalgadoPS
-    FOREIGN KEY (idSalgado) REFERENCES tbSalgado(idSalgado) ON DELETE RESTRICT
-);
-
-#Pedido e Bebida
-CREATE TABLE tbPedidoBebida (
-    idPedido INT,
-    idBebida INT,
-    Quantidade INT NOT NULL CHECK (quantidade > 0),
-    PRIMARY KEY (idBebida, idPedido),
-    
-    CONSTRAINT idPedidoPB
-    FOREIGN KEY (idPedido) REFERENCES tbPedido(idPedido) ON DELETE CASCADE,
-    
-    CONSTRAINT idBebidaPB
-    FOREIGN KEY (idBebida) REFERENCES tbBebida(idBebida) ON DELETE RESTRICT
+    CONSTRAINT fk_pedProd_Produto
+    FOREIGN KEY (idProduto) REFERENCES tbProduto(idProduto)
 );
