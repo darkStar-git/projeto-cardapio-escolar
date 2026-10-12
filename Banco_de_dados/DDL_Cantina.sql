@@ -39,8 +39,7 @@ CREATE TABLE tbPedido (
 #Categoria
 CREATE TABLE tbCategoria (
     idCategoria INT PRIMARY KEY AUTO_INCREMENT,
-    nomeCategoria VARCHAR(20),
-    descricaoCategoria VARCHAR(100)
+    nomeCategoria VARCHAR(20)
 );
 
 #Disponibilidade
