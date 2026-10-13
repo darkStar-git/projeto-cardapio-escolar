@@ -102,3 +102,53 @@ END$$
 
 
 
+#Criando pedido novo
+CREATE PROCEDURE sp_PedidoNovo(
+    spIdCliente INT
+)
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM tbCliente WHERE idCliente = spIdCliente
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Cliente não encontrado.';
+    END IF;
+    
+	INSERT INTO tbPedido(dataElaboracao, idCliente) VALUES
+    (NOW(), spIdCliente);
+END $$
+
+
+
+#Criando o pedido e com produtos visiveis
+CREATE PROCEDURE sp_PedidoAdicionarProduto(
+    spIdPedido INT,
+    spIdProduto INT,
+    spQuantidade INT
+)
+BEGIN
+    DECLARE decPreco DECIMAL(5,2);
+    DECLARE decDisponibilidade INT;
+
+    IF NOT EXISTS (SELECT 1 FROM tbPedido WHERE idPedido = spIdPedido) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Pedido não encontrado.';
+    END IF;
+
+    SELECT precoProduto, idDisponibilidade INTO decPreco, decDisponibilidade
+    FROM tbProduto WHERE idProduto = spIdProduto;
+
+    IF decPreco IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Produto não encontrado.';
+    END IF;
+
+    IF decDisponibilidade <> 1 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Produto indisponível.';
+    END IF;
+
+    INSERT INTO tbPedidoProduto (idPedido, idProduto, Quantidade, precoUnitario)
+    VALUES (spIdPedido, spIdProduto, spQuantidade, decPreco)
+    ON DUPLICATE KEY UPDATE Quantidade = Quantidade + spQuantidade;
+END $$
