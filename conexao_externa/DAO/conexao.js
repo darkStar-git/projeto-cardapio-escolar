@@ -6,7 +6,7 @@ async function conexao() {
         port: 3306,
         user: "root", 
         password: "1234", 
-        database: 'dbQuiz',
+        database: 'db_cantina',
     })
     return pool
 } // <-- Fechando a função conexao
