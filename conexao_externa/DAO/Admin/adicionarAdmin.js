@@ -1,18 +1,15 @@
-import {conexao} from '../conexao.js'
+import { conexao } from '../conexao.js'
 
-export async function adicionarAdmin(infos){
-    const data = [infos]
-    const sql = `INSERT INTO tbAdmin (nomeAdmin, registroAdm, senhaAdm) VALUES ?`
-    const conn = await conexao()
-    
-    try {
-        // Executar a consulta
-        const [results] = await conn.query(sql,[data]);
+export async function adicionarAdmin(infos) {
+  const sql = `CALL sp_admNovo(?, ?, ?)`
+  const conn = await conexao()
 
-        await conn.end()
-        return results
-      } catch (err) {
-        return err.message
-      }
+  try {
+    const [results] = await conn.query(sql, [infos.nomeAdmin, infos.registroAdm, infos.senhaAdm]);
+    await conn.end()
+    return { sucesso: true, dados: results }
+  } catch (err) {
+    await conn.end()
+    return { sucesso: false, erro: err.sqlMessage || err.message }
+  }
 }
-

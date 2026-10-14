@@ -1,18 +1,15 @@
-import {conexao} from '../conexao.js'
+import { conexao } from '../conexao.js'
 
-export async function adicionarPedidoProduto(infos){
-    const data = [infos]
-    const sql = `INSERT INTO tbPedidoProduto (idPedido, idProduto, quantidade, precoUnitario) VALUES ?`
-    const conn = await conexao()
-    
-    try {
-        // Executar a consulta
-        const [results] = await conn.query(sql,[data]);
+export async function adicionarPedidoProduto(infos) {
+  const sql = `CALL sp_PedidoAdicionarProduto(?, ?, ?)`
+  const conn = await conexao()
 
-        await conn.end()
-        return results
-      } catch (err) {
-        return err.message
-      }
+  try {
+    const [results] = await conn.query(sql, [infos.idPedido, infos.idProduto, infos.quantidade]);
+    await conn.end()
+    return { sucesso: true, dados: results }
+  } catch (err) {
+    await conn.end()
+    return { sucesso: false, erro: err.sqlMessage || err.message }
+  }
 }
-

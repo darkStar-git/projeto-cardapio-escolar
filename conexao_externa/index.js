@@ -84,57 +84,45 @@ app.get('/api/admin', async (req, res) => {
 
 // POSTS
 app.post('/api/adicionarCategoria', async (req, res) => {
-    let { nomeCategoria, descricaoCategoria } = req.body;
-    let infos = [nomeCategoria]
-    let results = await adicionarCategoria(infos)
+    let results = await adicionarCategoria(req.body);
     res.json(results);
 })
 
 app.post('/api/adicionarCliente', async (req, res) => {
-    let { nomeCliente, registroCliente } = req.body;
-    let infos = [nomeCliente, registroCliente]
-    let results = await adicionarCliente(infos)
+    let results = await adicionarCliente(req.body);
     res.json(results);
 })
 
 app.post('/api/adicionarDisponibilidade', async (req, res) => {
-    let { nomeDisponibilidade } = req.body;
-    let infos = [nomeDisponibilidade]
-    let results = await adicionarDisponibilidade(infos)
+    let results = await adicionarDisponibilidade(req.body);
     res.json(results);
 })
 
 app.post('/api/adicionarPedido', async (req, res) => {
-    let { dataElaboracao, idCliente } = req.body; // Corrigido para idCliente
-    let infos = [dataElaboracao, idCliente]
-    let results = await adicionarPedido(infos)
+
+    let results = await adicionarPedido(req.body);
     res.json(results);
-}) 
+})
 
 app.post('/api/adicionarPedidoProduto', async (req, res) => {
-    let { idPedido, idProduto, quantidade, precoUnitario } = req.body;
-    let infos = [idPedido, idProduto, quantidade, precoUnitario]
-    let results = await adicionarPedidoProduto(infos)
+
+    let results = await adicionarPedidoProduto(req.body);
     res.json(results);
 })
 
 app.post('/api/adicionarProduto', async (req, res) => {
-    let { nomeProduto, descricaoProduto, precoProduto } = req.body;
-    let infos = [nomeProduto, descricaoProduto, precoProduto]
-    let results = await adicionarProduto(infos)
+    // Precisa mandar: nomeProduto, descricaoProduto, precoProduto, idCategoria, idDisponibilidade
+    let results = await adicionarProduto(req.body);
     res.json(results);
 })
 
 app.post('/api/adicionarAdmin', async (req, res) => {
-    let { nomeAdmin, registroAdm, senhaAdm } = req.body;
-    let infos = [nomeAdmin, registroAdm, senhaAdm]
-    let results = await adicionarAdmin(infos)
+    let results = await adicionarAdmin(req.body);
     res.json(results);
 })
-
 // PUTS
 app.put('/api/editarCategoria', async (req, res) => {
-    let { idCategoria, nomeCategoria,} = req.body;
+    let { idCategoria, nomeCategoria, } = req.body;
     res.json(await editarCategoria(idCategoria, nomeCategoria));
 })
 
@@ -154,9 +142,9 @@ app.put('/api/editarPedido', async (req, res) => {
 })
 
 app.put('/api/editarPedidoProduto', async (req, res) => {
-    let { idPedido, idProduto, quantidade, precoUnitario } = req.body; 
+    let { idPedido, idProduto, quantidade, precoUnitario } = req.body;
     res.json(await editarPedidoProduto(idPedido, idProduto, quantidade, precoUnitario));
-}) 
+})
 
 app.put('/api/editarProduto', async (req, res) => {
     let { idProduto, nomeProduto, descricaoProduto, precoProduto } = req.body;
@@ -165,7 +153,7 @@ app.put('/api/editarProduto', async (req, res) => {
 
 app.put('/api/editarAdmin', async (req, res) => {
     let { idAdmin, nomeAdmin, registroAdm, senhaAdm } = req.body;
-    res.json(await editarAdmin(idAdmin, nomeAdmin, registroAdm, senhaAdm)); 
+    res.json(await editarAdmin(idAdmin, nomeAdmin, registroAdm, senhaAdm));
 })
 
 // DELETES

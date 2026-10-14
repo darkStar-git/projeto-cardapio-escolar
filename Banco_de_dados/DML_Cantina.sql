@@ -1,96 +1,89 @@
 USE db_Cantina;
 
-
-#Disponibilidade
+-- Limpa e insere dados iniciais
 INSERT INTO tbDisponibilidade (nomeDisponibilidade) VALUES 
 ('Disponivel'),
 ('Indisponivel');
 
-
-
-#Categoria
 INSERT INTO tbCategoria (nomeCategoria) VALUES 
 ('Lanches'),
 ('Salgados'),
 ('Bebidas');
 
-
 DELIMITER $$
 
+-- 1. Categoria Nova
+DROP PROCEDURE IF EXISTS sp_categoriaNova$$
 CREATE PROCEDURE sp_categoriaNova(
-	spNomeCategoria VARCHAR(20)
+    IN spNomeCategoria VARCHAR(20)
 )
 BEGIN
-	IF EXISTS (
-		SELECT 1 FROM tbCategoria WHERE nomeCategoria = spNomeCategoria
-	) THEN 
-    SIGNAL SQLSTATE '45000'
-		SET MESSAGE_TEXT = 'Categoria já cadastrada, insira outra.';
-	ELSE 
-    INSERT INTO tbCategoria (NomeCategoria) VALUES 
-    (spNomeCategoria);
+    IF EXISTS (
+        SELECT 1 FROM tbCategoria WHERE nomeCategoria = spNomeCategoria
+    ) THEN 
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Categoria já cadastrada, insira outra.';
+    ELSE 
+        INSERT INTO tbCategoria (nomeCategoria) VALUES (spNomeCategoria);
     END IF;
-END $$
+END$$
 
-
-
-#Inserindo adm novo
+-- 2. Inserindo adm novo
+DROP PROCEDURE IF EXISTS sp_admNovo$$
 CREATE PROCEDURE sp_admNovo(
-	spNomeAdm VARCHAR(30),
-    spRegistroAdm VARCHAR(10),
-    spSenhaAdm VARCHAR(255)
+    IN spNomeAdm VARCHAR(30),
+    IN spRegistroAdm VARCHAR(10),
+    IN spSenhaAdm VARCHAR(255)
 ) 
 BEGIN
     IF EXISTS (
-		SELECT 1 FROM tbAdmin WHERE registroAdm = spRegistroAdm
-        ) THEN
+        SELECT 1 FROM tbAdmin WHERE registroAdm = spRegistroAdm
+    ) THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Registro já cadastrado, insira outro.';
     ELSE
-	INSERT INTO tbAdmin (nomeAdm, registroAdm, senhaAdm) VALUES 
-    (spNomeAdm, spRegistroAdm, spSenhaAdm);
+        INSERT INTO tbAdmin (nomeAdm, registroAdm, senhaAdm) VALUES 
+        (spNomeAdm, spRegistroAdm, spSenhaAdm);
     END IF;
-END $$
+END$$
 
-
-
-#Inserindo novo cliente
+-- 3. Inserindo novo cliente
+DROP PROCEDURE IF EXISTS sp_clienteNovo$$
 CREATE PROCEDURE sp_clienteNovo(
-	spNomeCliente VARCHAR(30),
-    spRegistroCliente VARCHAR(10)
+    IN spNomeCliente VARCHAR(30),
+    IN spRegistroCliente VARCHAR(10)
 )
 BEGIN
-	IF EXISTS (
-		SELECT 1 FROM tbCliente WHERE registroCliente = spRegistroCliente
-		) THEN
-		SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Registro já cadastrado, insira outro.';
-	ELSE
-    INSERT INTO tbCliente (nomeCliente, registroCliente) VALUES 
-    (spNomeCliente, spRegistroCliente);
+    IF EXISTS (
+        SELECT 1 FROM tbCliente WHERE registroCliente = spRegistroCliente
+    ) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Registro já cadastrado, insira outro.';
+    ELSE
+        INSERT INTO tbCliente (nomeCliente, registroCliente) VALUES 
+        (spNomeCliente, spRegistroCliente);
     END IF;
-END $$
+END$$
 
-
-
-#Inserindo produto
+-- 4. Inserindo produto
+DROP PROCEDURE IF EXISTS sp_ProdutoNovo$$
 CREATE PROCEDURE sp_ProdutoNovo(
-    spNomeProduto       VARCHAR(40),
-    spDescricaoProduto  VARCHAR(120),
-    spPrecoProduto      DECIMAL(5, 2),
-    spIdCategoria       INT,
-    spIdDisponibilidade INT
+    IN spNomeProduto        VARCHAR(40),
+    IN spDescricaoProduto   VARCHAR(120),
+    IN spPrecoProduto       DECIMAL(5, 2),
+    IN spIdCategoria        INT,
+    IN spIdDisponibilidade INT
 )
 BEGIN
     IF NOT EXISTS (
-    SELECT 1 FROM tbCategoria WHERE idCategoria = spIdCategoria
+        SELECT 1 FROM tbCategoria WHERE idCategoria = spIdCategoria
     ) THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Categoria não encontrada.';
     END IF;
 
     IF NOT EXISTS (
-    SELECT 1 FROM tbDisponibilidade WHERE idDisponibilidade = spIdDisponibilidade
+        SELECT 1 FROM tbDisponibilidade WHERE idDisponibilidade = spIdDisponibilidade
     ) THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Disponibilidade não encontrada.';
@@ -100,11 +93,10 @@ BEGIN
     (spNomeProduto, spDescricaoProduto, spPrecoProduto, spIdCategoria, spIdDisponibilidade);
 END$$
 
-
-
-#Criando pedido novo
+-- 5. Criando pedido novo
+DROP PROCEDURE IF EXISTS sp_PedidoNovo$$
 CREATE PROCEDURE sp_PedidoNovo(
-    spIdCliente INT
+    IN spIdCliente INT
 )
 BEGIN
     IF NOT EXISTS (
@@ -114,17 +106,16 @@ BEGIN
             SET MESSAGE_TEXT = 'Cliente não encontrado.';
     END IF;
     
-	INSERT INTO tbPedido(dataElaboracao, idCliente) VALUES
+    INSERT INTO tbPedido(dataElaboracao, idCliente) VALUES
     (NOW(), spIdCliente);
-END $$
+END$$
 
-
-
-#Criando o pedido e com produtos visiveis
+-- 6. Criando o pedido e com produtos visiveis
+DROP PROCEDURE IF EXISTS sp_PedidoAdicionarProduto$$
 CREATE PROCEDURE sp_PedidoAdicionarProduto(
-    spIdPedido INT,
-    spIdProduto INT,
-    spQuantidade INT
+    IN spIdPedido INT,
+    IN spIdProduto INT,
+    IN spQuantidade INT
 )
 BEGIN
     DECLARE decPreco DECIMAL(5,2);
@@ -151,4 +142,6 @@ BEGIN
     INSERT INTO tbPedidoProduto (idPedido, idProduto, Quantidade, precoUnitario)
     VALUES (spIdPedido, spIdProduto, spQuantidade, decPreco)
     ON DUPLICATE KEY UPDATE Quantidade = Quantidade + spQuantidade;
-END $$
+END$$
+
+DELIMITER ;
