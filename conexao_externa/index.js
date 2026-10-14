@@ -94,7 +94,9 @@ app.post('/api/adicionarCliente', async (req, res) => {
 })
 
 app.post('/api/adicionarDisponibilidade', async (req, res) => {
-    let results = await adicionarDisponibilidade(req.body);
+    let { nomeDisponibilidade } = req.body;
+    let infos = [nomeDisponibilidade]
+    let results = await adicionarDisponibilidade(infos)
     res.json(results);
 })
 
