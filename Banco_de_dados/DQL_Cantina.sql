@@ -20,3 +20,6 @@ CREATE OR REPLACE VIEW vw_PedidosFeitos AS
     FROM tbPedido
     LEFT JOIN tbCliente
     ON tbPedido.idCliente = tbCliente.idCliente;
+    
+
+SELECT * FROM vw_Catalogo;
