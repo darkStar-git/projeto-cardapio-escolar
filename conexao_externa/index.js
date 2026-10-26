@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 
 // GETS
 import { buscarCategorias } from './DAO/Categorias/buscarCategoria.js'
@@ -39,6 +40,7 @@ import { removerAdmin } from './DAO/Admin/removerAdmin.js'
 const app = express()
 
 // Middleware para o Express ler o corpo (body) das requisições em JSON
+app.use(cors())
 app.use(express.json())
 
 // Rota Base
