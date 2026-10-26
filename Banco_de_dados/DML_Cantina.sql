@@ -22,7 +22,7 @@ BEGIN
         SELECT 1 FROM tbCategoria WHERE nomeCategoria = spNomeCategoria
     ) THEN 
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Categoria já cadastrada, insira outra.';
+            SET MESSAGE_TEXT = 'Categoria já cadastrada, insira outra.'
     ELSE 
         INSERT INTO tbCategoria (nomeCategoria) VALUES (spNomeCategoria);
     END IF;

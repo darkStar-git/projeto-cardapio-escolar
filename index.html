@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>• Cardápio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cantina Ramos</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/css/style.css">
 </head>
 <body>
-    
+  <div id="app"></div>     <!-- tela atual -->
+  <div id="modal"></div>   <!-- formulários e confirmações -->
+  <div id="toast"></div>   <!-- mensagens temporárias -->
+
+  <!-- A ORDEM IMPORTA: cada arquivo usa o que os anteriores definem -->
+  <script src="./src/js/api.js"></script>             <!-- chamadas ao backend -->
+  <script src="./src/js/estado.js"></script>          <!-- estado e funções auxiliares -->
+  <script src="./src/js/componentes.js"></script>     <!-- ícones e logo -->
+  <script src="./src/js/render.js"></script>          <!-- navegação e desenho da tela -->
+  <script src="./src/js/acoes-cliente.js"></script>  <!-- login, carrinho, pedido -->
+  <script src="./src/js/acoes-admin.js"></script>    <!-- produtos, categorias, login admin -->
+  <script src="./src/js/telas-cliente.js"></script>  <!-- HTML das telas do cliente -->
+  <script src="./src/js/telas-admin.js"></script>    <!-- HTML das telas do admin -->
+  <script src="./src/js/main.js"></script>            <!-- inicialização -->
 </body>
 </html>
