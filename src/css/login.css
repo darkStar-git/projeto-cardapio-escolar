@@ -1,0 +1,226 @@
+/* ==========================================================
+   login.css – LOGIN – tela de login (cliente e admin)
+   Painel da marca (prato, hambúrguer, xadrez) e formulário de entrada.
+   ========================================================== */
+
+
+/* --- LOGIN (cliente e admin) --- */
+.login-page {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  min-height: 100vh;
+}
+
+.brand-panel {
+  align-items: center;
+  background: var(--orange);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 40px;
+  position: relative;
+  text-align: center;
+}
+
+.brand-panel::after {
+  background: radial-gradient(circle, rgba(255, 255, 255, .08) 1px, transparent 1px);
+  background-size: 18px 18px;
+  content: "";
+  inset: 0;
+  opacity: .45;
+  position: absolute;
+}
+
+.checker {
+  background: repeating-conic-gradient(rgba(255, 255, 255, .4) 0 25%, transparent 0 50%) 50% / 20px 20px;
+  height: 28px;
+  left: 0;
+  opacity: .5;
+  position: absolute;
+  right: 0;
+  top: 7%;
+}
+
+.brand-panel>p {
+  color: var(--cream);
+  font-family: "Fraunces", serif;
+  font-size: 19px;
+  line-height: 1.45;
+  margin: 34px 0 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.brand-panel>small {
+  bottom: 28px;
+  color: rgba(255, 248, 234, .68);
+  font-size: 11px;
+  letter-spacing: .1em;
+  position: absolute;
+  z-index: 2;
+}
+
+.plate {
+  align-items: center;
+  background: #f8e6c8;
+  border: 10px solid rgba(255, 255, 255, .22);
+  border-radius: 50%;
+  display: flex;
+  height: 230px;
+  justify-content: center;
+  margin-top: 18px;
+  position: relative;
+  width: 230px;
+  z-index: 2;
+}
+
+.plate::after {
+  border: 2px dashed #dfc89d;
+  border-radius: 50%;
+  content: "";
+  inset: 12px;
+  position: absolute;
+}
+
+.burger {
+  filter: drop-shadow(0 13px 8px rgba(72, 34, 9, .2));
+  transform: rotate(-4deg);
+  width: 150px;
+  z-index: 2;
+}
+
+.burger>* {
+  display: block;
+  height: 20px;
+  margin: -2px auto;
+  width: 130px;
+}
+
+.burger i {
+  background: #eda438;
+  border-radius: 60px 60px 12px 12px;
+  height: 43px;
+  width: 145px;
+}
+
+.burger i:last-child {
+  border-radius: 8px 8px 30px 30px;
+  height: 30px;
+}
+
+.burger b {
+  background: #643422;
+  border-radius: 13px;
+}
+
+.burger em {
+  background: #62a347;
+  clip-path: polygon(0 35%, 15% 10%, 30% 50%, 45% 15%, 60% 55%, 78% 5%, 100% 40%, 95% 85%, 5% 90%);
+}
+
+.login-panel {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 45px;
+}
+
+.login-card {
+  max-width: 460px;
+  width: 100%;
+}
+
+.mobile-logo {
+  display: none;
+}
+
+.login-card h1 {
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 10px 0 12px;
+}
+
+.login-card>p {
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+.login-card label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.field {
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 0 15px;
+  transition: .2s;
+}
+
+.field:focus-within {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(217, 75, 36, .1);
+}
+
+.field .icon {
+  color: #a69c8e;
+}
+
+.field input {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 14px 0;
+  width: 100%;
+}
+
+.login-card .primary {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.mode-switch {
+  align-items: center;
+  background: none;
+  border: 0;
+  color: var(--green);
+  display: flex;
+  font-size: 13px;
+  font-weight: 700;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 22px;
+  width: 100%;
+}
+
+/* --- Responsivo: (max-width: 700px) --- */
+@media (max-width: 700px) {
+  .login-page {
+    display: block;
+  }
+
+  .brand-panel {
+    display: none;
+  }
+
+  .login-panel {
+    min-height: 100vh;
+    padding: 28px 22px;
+  }
+
+  .mobile-logo {
+    display: block;
+    margin-bottom: 55px;
+  }
+
+  .login-card h1 {
+    font-size: 36px;
+  }
+}

@@ -1,0 +1,242 @@
+/* ==========================================================
+   base.css – BASE – carregado em TODAS as telas
+   Variáveis de cor, reset, tipografia, logo, botão principal, busca, estados vazio/erro e toast.
+   ========================================================== */
+
+:root {
+  --orange: #d94b24;
+  --orange-dark: #b93618;
+  --green: #194d3b;
+  --green-light: #287158;
+  --cream: #fff8ea;
+  --paper: #fffcf5;
+  --ink: #28251f;
+  --muted: #756f65;
+  --line: #e9dfcf;
+  --white: #ffffff;
+  --shadow: 0 18px 50px rgba(75, 44, 20, .12);
+}
+
+/* --- BASE E TIPOGRAFIA --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif;
+}
+
+.icon {
+  display: block;
+  flex: none;
+}
+
+.eyebrow {
+  color: var(--orange);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h1 {
+  font-family: "Fraunces", serif;
+}
+
+/* --- LOGO --- */
+.logo {
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: .82;
+  position: relative;
+  z-index: 2;
+}
+
+.logo strong {
+  font: 800 clamp(54px, 7vw, 88px)/.85 "Fraunces", serif;
+}
+
+.logo-small {
+  color: #ffce79;
+  font: 700 30px/1 "Fraunces", serif;
+  transform: rotate(-5deg);
+}
+
+.logo-tag {
+  background: var(--cream);
+  border-radius: 20px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  margin-top: 15px;
+  padding: 8px 16px;
+}
+
+.logo.compact {
+  align-items: flex-start;
+  color: var(--orange);
+}
+
+.logo.compact .logo-small {
+  color: var(--green);
+  font-size: 16px;
+}
+
+.logo.compact strong {
+  font-size: 32px;
+}
+
+.logo.compact .logo-tag {
+  display: none;
+}
+
+/* --- LOGIN (cliente e admin) --- */
+.search input {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  padding: 14px 0;
+  width: 100%;
+}
+
+.primary {
+  align-items: center;
+  background: var(--orange);
+  border: 0;
+  border-radius: 12px;
+  color: var(--white);
+  display: flex;
+  font-weight: 700;
+  gap: 10px;
+  justify-content: center;
+  padding: 14px 20px;
+  transition: .2s;
+}
+
+.primary:hover {
+  background: var(--orange-dark);
+  transform: translateY(-1px);
+}
+
+.primary:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+  transform: none;
+}
+
+/* --- CLIENTE – cabeçalho e cardápio --- */
+.search {
+  align-items: center;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: #9b9183;
+  display: flex;
+  gap: 10px;
+  min-width: 280px;
+  padding: 0 14px;
+}
+
+/* --- CLIENTE – carrinho --- */
+.empty {
+  align-items: center;
+  border: 1px dashed var(--line);
+  border-radius: 18px;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  padding: 65px;
+  text-align: center;
+}
+
+.empty h2 {
+  color: var(--ink);
+  margin: 15px 0 8px;
+}
+
+/* --- ADMIN – menu lateral, produtos e tabelas --- */
+.logout {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, .65);
+  display: flex;
+  font-weight: 700;
+  gap: 11px;
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.logout {
+  margin-top: auto;
+}
+
+/* --- EXTRAS (não existiam no protótipo do Figma) --- */
+.toast {
+  background: var(--ink);
+  border-radius: 12px;
+  bottom: 28px;
+  box-shadow: var(--shadow);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  left: 50%;
+  padding: 12px 20px;
+  position: fixed;
+  transform: translateX(-50%);
+  z-index: 60;
+}
+
+.estado-api {
+  margin: 90px auto;
+  max-width: 520px;
+  padding: 0 20px;
+}
+
+.empty .primary {
+  margin-top: 18px;
+}
+
+.erro {
+  color: var(--orange-dark);
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 14px;
+}
+
+.primary.danger {
+  background: #8e1b1b;
+}
+
+/* --- Responsivo: (max-width: 960px) --- */
+@media (max-width: 960px) {
+  .logout {
+    font-size: 0;
+    justify-content: center;
+  }
+}
+
+/* --- Responsivo: (max-width: 700px) --- */
+@media (max-width: 700px) {
+  .search {
+    min-width: 0;
+  }
+
+  .logout {
+    margin: 0;
+  }
+
+  .toast {
+    bottom: 82px;
+  }
+}

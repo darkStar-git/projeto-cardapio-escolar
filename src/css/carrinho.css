@@ -1,0 +1,166 @@
+/* ==========================================================
+   carrinho.css – CARRINHO – lista de itens e resumo
+   Carregado somente na tela do carrinho (depois de cliente.css).
+   ========================================================== */
+
+
+/* --- CLIENTE – carrinho --- */
+.cart-page .back {
+  background: none;
+  border: 0;
+  color: var(--green);
+  font-weight: 700;
+  margin-bottom: 35px;
+  padding: 0;
+}
+
+.cart-layout {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr 360px;
+  margin-top: 40px;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-list article {
+  align-items: center;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 70px 1fr auto 90px;
+  padding: 18px;
+}
+
+.cart-list h2 {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.cart-list p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+.cart-thumb {
+  background: radial-gradient(circle, #e6a640 0 25%, #743d24 26% 39%, transparent 40%), #f7e3ba;
+  border-radius: 12px;
+  height: 65px;
+}
+
+.remove {
+  background: none;
+  border: 0;
+  color: var(--orange);
+  font-size: 11px;
+  padding: 7px 0 0;
+}
+
+.qty {
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+}
+
+.qty button {
+  background: none;
+  border: 0;
+  color: var(--green);
+  padding: 8px;
+}
+
+.qty b {
+  font-size: 13px;
+  min-width: 18px;
+  text-align: center;
+}
+
+.summary {
+  align-self: start;
+  background: var(--green);
+  border-radius: 18px;
+  color: white;
+  padding: 28px;
+}
+
+.summary h2 {
+  font-size: 25px;
+  margin-bottom: 26px;
+}
+
+.summary>div {
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+  margin: 13px 0;
+}
+
+.summary hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, .2);
+  margin: 22px 0;
+}
+
+.summary .grand-total {
+  align-items: flex-end;
+}
+
+.grand-total strong {
+  color: #ffcc79;
+  font: 700 25px "Fraunces", serif;
+}
+
+.summary .primary {
+  margin: 25px 0 13px;
+  width: 100%;
+}
+
+.summary>small {
+  color: rgba(255, 255, 255, .55);
+  display: block;
+  font-size: 10px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.summary .success {
+  align-items: center;
+  color: #bfe0bb;
+  display: flex;
+  font-size: 12px;
+  gap: 6px;
+}
+
+/* --- Responsivo: (max-width: 960px) --- */
+@media (max-width: 960px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    width: 100%;
+  }
+}
+
+/* --- Responsivo: (max-width: 700px) --- */
+@media (max-width: 700px) {
+  .cart-list article {
+    grid-template-columns: 55px 1fr;
+  }
+
+  .cart-list article>strong {
+    text-align: right;
+  }
+
+  .cart-thumb {
+    height: 55px;
+  }
+}
