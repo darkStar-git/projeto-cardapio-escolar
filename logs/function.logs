@@ -1,0 +1,5 @@
+Segunda 05/10 - 14:58
+
+Fiz o arquivo DAO com as Funções de cada Tabela. 
+Tabelas:Pratos, Bebidas , Lanches e Admin. 
+Functions: buscar, deletar, inserir e update.

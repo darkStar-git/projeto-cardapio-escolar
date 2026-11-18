@@ -1,0 +1,70 @@
+/* ==========================================================
+   modal.css – MODAIS – formulários e confirmação de exclusão
+   Carregado nas telas que abrem modal (produtos e categorias).
+   ========================================================== */
+
+
+/* --- LOGIN (cliente e admin) --- */
+.modal label {
+   display: block;
+   font-size: 13px;
+   font-weight: 700;
+   margin-bottom: 18px;
+}
+
+/* --- MODAIS --- */
+.modal-backdrop {
+   align-items: center;
+   background: rgba(28, 31, 25, .55);
+   display: flex;
+   inset: 0;
+   justify-content: center;
+   padding: 20px;
+   position: fixed;
+   z-index: 50;
+}
+
+.modal {
+   background: white;
+   border-radius: 18px;
+   box-shadow: var(--shadow);
+   max-width: 520px;
+   padding: 30px;
+   width: 100%;
+}
+
+.modal h2 {
+   font-size: 28px;
+   margin: 6px 0 25px;
+}
+
+.modal label>input,
+.modal select {
+   border: 1px solid var(--line);
+   border-radius: 10px;
+   display: block;
+   margin-top: 7px;
+   outline: none;
+   padding: 12px;
+   width: 100%;
+}
+
+.modal-actions {
+   display: flex;
+   gap: 10px;
+   justify-content: flex-end;
+   margin-top: 12px;
+}
+
+.modal-actions>button:first-child {
+   background: white;
+   border: 1px solid var(--line);
+   border-radius: 12px;
+   padding: 12px 20px;
+}
+
+/* --- EXTRAS (não existiam no protótipo do Figma) --- */
+.modal p {
+   color: var(--muted);
+   margin-bottom: 22px;
+}

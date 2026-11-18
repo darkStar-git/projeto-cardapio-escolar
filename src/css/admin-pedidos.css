@@ -1,0 +1,94 @@
+/* ==========================================================
+   admin-pedidos.css – ADMIN – pedidos
+   Lista de pedidos, detalhe do pedido e selo de visualização.
+   ========================================================== */
+
+
+/* --- ADMIN – pedidos --- */
+.orders {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.orders article {
+  align-items: center;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 90px 1fr 100px 110px;
+  padding: 20px;
+}
+
+.order-id span,
+.order-id small {
+  display: block;
+}
+
+.order-id span {
+  color: var(--orange);
+  font-weight: 800;
+}
+
+.order-id small,
+.orders p {
+  color: var(--muted);
+  font-size: 11px;
+  margin: 4px 0 0;
+}
+
+/* --- EXTRAS (não existiam no protótipo do Figma) --- */
+.ver {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 9px 14px;
+}
+
+.detalhe-item {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 14px 20px;
+}
+
+.detalhe-total {
+  display: flex;
+  font-size: 18px;
+  font-weight: 800;
+  justify-content: space-between;
+  padding: 18px 20px;
+}
+
+.selo {
+  background: #f5eee1;
+  border-radius: 15px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 12px;
+}
+
+/* --- Responsivo: (max-width: 700px) --- */
+@media (max-width: 700px) {
+  .orders article {
+    grid-template-columns: 70px 1fr;
+  }
+
+  .orders article>b {
+    justify-self: start;
+  }
+
+  .detalhe-item {
+    grid-template-columns: 1.5fr .6fr 1fr 1fr;
+    padding: 12px 14px;
+  }
+}
